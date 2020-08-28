@@ -59,7 +59,7 @@ the placeholders with your information:
 
 3. Install The Launchpad
     ```shell script
-    npm install --global launch-pad
+    npm i -g the-launch-pad
     ```
 
 4. Blast off!
