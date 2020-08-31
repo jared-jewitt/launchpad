@@ -1,6 +1,6 @@
 # Launchpad
 
-> 🚀 The fastest way to bootstrap an app
+🚀 The fastest way to bootstrap an app
 
 #### Requirements:
 
@@ -13,11 +13,11 @@
  
 #### High Level Description
 
-The Launchpad is an interactive CLI wizard used to scaffold a new web application tailored to your specific stack needs.
+Launchpad is an interactive CLI wizard used to scaffold a new web application tailored to your specific stack needs.
 
 #### Low Level Description
 
-You install The Launchpad globally via npm and simply run the `launch` command. This will, in order:
+You install Launchpad globally via npm and simply run the `launch` command. This will, in order:
 - Ask for a project name
 - Ask for a project description
 - Ask if the project is private
@@ -34,16 +34,16 @@ You install The Launchpad globally via npm and simply run the `launch` command. 
 #### What's a "Booster"?
 
 Boosters are just individual boilerplates that are _expected_ to contain run and deployment instructions. Without
-boosters, The Launchpad would be useless. Currently, boosters can be found within
+boosters, the Launchpad would be useless. Currently, boosters can be found within
 [my GitHub repositories](https://github.com/jared-jewitt?tab=repositories). Boosters must respect the following
-repository naming convention: `[client|server|database]-booster-[library/framework]`. For example, a booster may 
+repository naming convention: `[client|server|database]-booster-[library/framework]`. For example, a booster name may 
 look like `client-booster-react`.
  
 A full set of Booster guidelines can be found [here](https://github.com/jared-jewitt/booster-guidelines).
 
 ## Getting Started
 
-1. On your GitHub account, navigate to Settings / Developer settings / Personal access tokens.
+1. On your GitHub account, navigate to `Settings / Developer settings / Personal access tokens`.
 Generate a new token with the `repo` scope.
 
 2. Add a `.netrc` file to your `$HOME` directory. Below is a template of what your file should look like. Replace
@@ -57,7 +57,7 @@ the placeholders with your information:
       login <token>
     ```
 
-3. Install The Launchpad
+3. Install Launchpad
     ```shell script
     npm i -g the-launch-pad
     ```
