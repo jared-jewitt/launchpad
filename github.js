@@ -1,29 +1,30 @@
 const CLI = require("clui");
 const { Octokit } = require("@octokit/rest");
-const { createNetrcAuth } = require("octokit-auth-netrc");
+const { createTokenAuth } = require("@octokit/auth");
 
-const octokit = new Octokit({
-  authStrategy: createNetrcAuth,
-});
+let octokit = new Octokit();
 
 module.exports = {
-  getUser: async () => {
-    const spinner = new CLI.Spinner("Fetching profile...");
+  authenticate: async (token) => {
+    const spinner = new CLI.Spinner("Authenticating GitHub...");
     try {
       spinner.start();
+      octokit = new Octokit({
+        authStrategy: createTokenAuth,
+        auth: token,
+      });
       return await octokit.request("/user");
     } finally {
       spinner.stop();
     }
   },
 
-  getRepos: async ({ username, ...rest }) => {
+  getRepos: async (username) => {
     const spinner = new CLI.Spinner("Fetching repositories...");
     try {
       spinner.start();
       return await octokit.repos.listForUser({
         username,
-        ...rest
       });
     } finally {
       spinner.stop();

@@ -1,6 +1,6 @@
 {
   "name": "the-launch-pad",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "The fastest way to bootstrap an app",
   "license": "MIT",
   "main": "index.js",
@@ -8,13 +8,14 @@
     "launch": "index.js"
   },
   "dependencies": {
+    "@octokit/auth": "^2.0.0",
     "@octokit/rest": "^16.36.0",
     "chalk": "^3.0.0",
     "clear": "^0.1.0",
     "clui": "^0.3.6",
+    "configstore": "^5.0.1",
     "figlet": "^1.2.4",
     "inquirer": "^7.0.3",
-    "octokit-auth-netrc": "^1.0.0",
     "simple-git": "^1.129.0"
   }
 }

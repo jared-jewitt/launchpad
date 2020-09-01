@@ -1,8 +1,13 @@
+const fs = require("fs");
 const inquirer = require("inquirer");
-const { formatPath, formatRepos } = require("./utils/formatters");
+const chalk = require("chalk");
+const github = require("./github");
+const { config } =  require("./utils/config");
+const { LAUNCHPAD_OWNER } = require("./utils/constants");
+const { formatPath, formatRepos } = require("./utils/format");
 
 module.exports = {
-  askName: async () => {
+  askMeta: async () => {
     const questions = [
       {
         name: "name",
@@ -13,14 +18,6 @@ module.exports = {
           return "Please enter a name for your project.";
         },
       },
-    ];
-
-    const { name } = await inquirer.prompt(questions);
-    return formatPath(name);
-  },
-
-  askDescription: async () => {
-    const questions = [
       {
         name: "description",
         type: "input",
@@ -30,14 +27,6 @@ module.exports = {
           return "Please enter a description for your project.";
         },
       },
-    ];
-
-    const { description } = await inquirer.prompt(questions);
-    return description;
-  },
-
-  askIfPrivate: async () => {
-    const questions = [
       {
         name: "isPrivate",
         type: "confirm",
@@ -45,69 +34,57 @@ module.exports = {
       },
     ];
 
-    const { isPrivate } = await inquirer.prompt(questions);
-    return isPrivate;
+    let { name, description, isPrivate } = await inquirer.prompt(questions);
+
+    const verifyName = async (n) => {
+      if (fs.existsSync(n)) {
+        console.log(chalk.yellow(`Your working directory already contains a folder called "${n}". Please try a different name.`));
+        ({ name } = await inquirer.prompt(questions[0]));
+        return await verifyName(name);
+      }
+    };
+    await verifyName(name);
+
+    return { name: formatPath(name), description, private: isPrivate };
   },
 
-  askWhichClient: async (repos) => {
-    const boosters = formatRepos("client-booster-", repos);
+  askStack: async () => {
+    const repos = await github.getRepos(LAUNCHPAD_OWNER);
+    const clientBoosters = formatRepos("client-booster-", repos);
+    const serverBoosters = formatRepos("server-booster-", repos);
+    const databaseBoosters = formatRepos("database-booster-", repos);
+
     const questions = [
       {
         name: "client",
         type: "list",
         message: "Select a client:",
-        choices: boosters.map(b => b.label),
+        choices: clientBoosters.map(b => b.label),
         validate: (value) => {
           if (value.length) return true;
           return "Please select a client.";
         },
       },
-    ];
-
-    const { client } = await inquirer.prompt(questions);
-    return boosters.find(b => b.label === client).value;
-  },
-
-  askWhichServer: async (repos) => {
-    const boosters = formatRepos("server-booster-", repos);
-    const questions = [
       {
         name: "server",
         type: "list",
         message: "Select a server:",
-        choices: boosters.map(b => b.label),
+        choices: serverBoosters.map(b => b.label),
         validate: (value) => {
           if (value.length) return true;
           return "Please select a server.";
         },
       },
-    ];
-
-    const { server } = await inquirer.prompt(questions);
-    return boosters.find(b => b.label === server).value;
-  },
-
-  askWhichDatabase: async (repos) => {
-    const boosters = formatRepos("database-booster-", repos);
-    const questions = [
       {
         name: "database",
         type: "list",
         message: "Select a database:",
-        choices: boosters.map(b => b.label),
+        choices: databaseBoosters.map(b => b.label),
         validate: (value) => {
           if (value.length) return true;
           return "Please select a database.";
         },
       },
-    ];
-
-    const { database } = await inquirer.prompt(questions);
-    return boosters.find(b => b.label === database).value;
-  },
-
-  askConfirmation: async () => {
-    const questions = [
       {
         name: "confirm",
         type: "confirm",
@@ -115,7 +92,53 @@ module.exports = {
       },
     ];
 
-    const { confirm } = await inquirer.prompt(questions);
-    return confirm;
+    let { client, server, database, confirm } = await inquirer.prompt(questions);
+
+    const verifyStack = async (c) => {
+      if (!c) {
+        ({ client, server, database, confirm } = await inquirer.prompt(questions));
+        return await verifyStack(confirm);
+      }
+    };
+    await verifyStack(confirm);
+
+    return {
+      client: clientBoosters.find(b => b.label === client).value,
+      server: serverBoosters.find(b => b.label === server).value,
+      database: databaseBoosters.find(b => b.label === database).value,
+    };
+  },
+
+  askToken: async () => {
+    const questions = [
+      {
+        name: "token",
+        type: "input",
+        message: "Enter your GitHub personal access token (https://github.com/settings/tokens)",
+        validate: (value) => {
+          if (value.length) return true;
+          return "Please enter your GitHub personal access token.";
+        },
+      },
+    ];
+
+    let data = {};
+    let token = config.get("token");
+    if (!token) ({ token } = await inquirer.prompt(questions));
+
+    const verifyToken = async (t) => {
+      try {
+        ({ data } = await github.authenticate(t));
+        config.set("token", t);
+      } catch (e) {
+        config.set("token", null);
+        console.log(chalk.yellow("Invalid token. Please enter a valid GitHub personal access token"));
+        ({ token } = await inquirer.prompt(questions));
+        return await verifyToken(token);
+      }
+    };
+    await verifyToken(token);
+
+    return { token, username: data.login };
   },
 };

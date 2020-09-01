@@ -8,55 +8,23 @@ const chalk = require("chalk");
 const figlet = require("figlet");
 const inquirer = require("./inquirer");
 const github = require("./github");
-const { formatSentence } = require("./utils/formatters");
+const { LAUNCHPAD_OWNER } = require("./utils/constants");
+const { formatSentence } = require("./utils/format");
 
 (async () => {
-  const LAUNCHPAD_OWNER = "jared-jewitt";
-  let
-    name = "",
-    client = "",
-    server = "",
-    database = "";
-
   try {
     clear();
 
     console.log(
-      chalk.magenta(
+      chalk.cyan(
         figlet.textSync("Launchpad", { horizontalLayout: "full" })
       )
     );
 
-    name = await inquirer.askName();
+    const { name, description, private } = await inquirer.askMeta();
+    const { client, server, database } = await inquirer.askStack();
+    const { token, username } = await inquirer.askToken();
 
-    const validateName = async (n) => {
-      if (fs.existsSync(n)) {
-        console.log(chalk.yellow(`Your working directory already contains a folder called "${n}". Please try a different name.`));
-        name = await inquirer.askName();
-        return await validateName(name);
-      }
-    };
-    await validateName(name);
-
-    const description = await inquirer.askDescription();
-    const private = await inquirer.askIfPrivate();
-
-    const repos = await github.getRepos({ username: LAUNCHPAD_OWNER });
-    const validateStack = async (c, s, d, i) => {
-      if (!c && !s && !d) {
-        if (i > 0) console.log(chalk.yellow("Please select at least one booster"));
-        client = await inquirer.askWhichClient(repos);
-        server = await inquirer.askWhichServer(repos);
-        database = await inquirer.askWhichDatabase(repos);
-        return await validateStack(client, server, database, i + 1);
-      }
-    };
-    await validateStack(client, server, database, 0);
-
-    const confirm = await inquirer.askConfirmation();
-    if (!confirm) process.exit();
-
-    const { data: { login: username } } = await github.getUser();
     const stack = [
       ...(!client ? [] : [{
         template_owner: LAUNCHPAD_OWNER,
@@ -105,7 +73,7 @@ const { formatSentence } = require("./utils/formatters");
       });
     }));
 
-    await git.clone(`https://github.com/${username}/${name}`, name);
+    await git.clone(`https://${username}:${token}@github.com/${username}/${name}`, name);
     await git.cwd(path.join(process.cwd(), name));
     process.chdir(name);
 
@@ -125,11 +93,11 @@ const { formatSentence } = require("./utils/formatters");
     });
 
     await git.add(".");
-    await git.commit("Add submodules");
+    await git.commit("Blast off 🚀");
     await git.push("origin", "master");
 
     console.log(
-      chalk.magenta(
+      chalk.cyan(
         figlet.textSync("Blast off!", { horizontalLayout: "full" })
       )
     );
