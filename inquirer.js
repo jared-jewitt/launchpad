@@ -114,7 +114,7 @@ module.exports = {
       {
         name: "token",
         type: "input",
-        message: "Enter your GitHub personal access token (https://github.com/settings/tokens)",
+        message: "Enter your GitHub personal access token (https://github.com/settings/tokens):",
         validate: (value) => {
           if (value.length) return true;
           return "Please enter your GitHub personal access token.";
