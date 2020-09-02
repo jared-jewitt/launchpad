@@ -1,9 +1,13 @@
 {
   "name": "the-launch-pad",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "The fastest way to bootstrap an app",
   "license": "MIT",
   "main": "index.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/jared-jewitt/launchpad.git"
+  },
   "bin": {
     "launch": "index.js"
   },

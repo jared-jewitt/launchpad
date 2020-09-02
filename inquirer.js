@@ -2,8 +2,8 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const chalk = require("chalk");
 const github = require("./github");
+const constants = require("./constants");
 const { config } =  require("./utils/config");
-const { LAUNCHPAD_OWNER } = require("./utils/constants");
 const { formatPath, formatRepos } = require("./utils/format");
 
 module.exports = {
@@ -49,7 +49,7 @@ module.exports = {
   },
 
   askStack: async () => {
-    const repos = await github.getRepos(LAUNCHPAD_OWNER);
+    const repos = await github.getRepos(constants.LAUNCHPAD_OWNER);
     const clientBoosters = formatRepos("client-booster-", repos);
     const serverBoosters = formatRepos("server-booster-", repos);
     const databaseBoosters = formatRepos("database-booster-", repos);

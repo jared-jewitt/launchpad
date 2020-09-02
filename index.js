@@ -8,7 +8,7 @@ const chalk = require("chalk");
 const figlet = require("figlet");
 const inquirer = require("./inquirer");
 const github = require("./github");
-const { LAUNCHPAD_OWNER } = require("./utils/constants");
+const constants = require("./constants");
 const { formatSentence } = require("./utils/format");
 
 (async () => {
@@ -27,7 +27,7 @@ const { formatSentence } = require("./utils/format");
 
     const stack = [
       ...(!client ? [] : [{
-        template_owner: LAUNCHPAD_OWNER,
+        template_owner: constants.LAUNCHPAD_OWNER,
         template_repo: client,
         owner: username,
         name: `${name}-client`,
@@ -36,7 +36,7 @@ const { formatSentence } = require("./utils/format");
         folderName: "client",
       }]),
       ...(!server ? [] : [{
-        template_owner: LAUNCHPAD_OWNER,
+        template_owner: constants.LAUNCHPAD_OWNER,
         template_repo: server,
         owner: username,
         name: `${name}-server`,
@@ -45,7 +45,7 @@ const { formatSentence } = require("./utils/format");
         folderName: "server",
       }]),
       ...(!database ? [] : [{
-        template_owner: LAUNCHPAD_OWNER,
+        template_owner: constants.LAUNCHPAD_OWNER,
         template_repo: database,
         owner: username,
         name: `${name}-database`,
