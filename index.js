@@ -6,6 +6,7 @@ const git = require("simple-git/promise")();
 const clear = require("clear");
 const chalk = require("chalk");
 const figlet = require("figlet");
+
 const inquirer = require("./inquirer");
 const github = require("./github");
 const constants = require("./constants");

@@ -6,15 +6,11 @@ node_modules
 .LSOverride
 
 # IDEs and editors
-/.idea
+.idea
+.vscode
 .project
 .classpath
-.c9/
+.settings
+.c9
 *.launch
-.settings/
 *.sublime-workspace
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json

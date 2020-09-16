@@ -1,6 +1,20 @@
-# 🚀 Launchpad 🚀
+<p align="center">
+  <img alt="Logo" src="https://user-images.githubusercontent.com/22352564/94222217-a33b8c80-fea1-11ea-9aa1-05bbee24ee58.png">
+  <p align="center">
+    <a href="https://www.npmjs.com/package/the-launch-pad" target="_blank">
+      <img alt="Version" src="https://img.shields.io/npm/v/the-launch-pad?color=%23706BF5&style=for-the-badge" />
+    </a>
+    <a href="https://github.com/jared-jewitt/frontend-booster-react/blob/master/LICENSE" target="_blank">
+      <img alt="License" src="https://img.shields.io/npm/l/the-launch-pad?color=%23706BF5&style=for-the-badge" />
+    </a>
+  </p>
+</p>
 
-> The fastest way to bootstrap an app
+## How to Install
+
+```shell script
+npm i -g the-launch-pad
+```
 
 #### Requirements:
 
@@ -40,7 +54,7 @@ look like `frontend-booster-react`.
  
 A full set of Booster guidelines can be found [here](https://github.com/jared-jewitt/booster-guidelines).
 
-## Getting Started
+## 🚀 Getting Started
 
 1. On your GitHub account, navigate to _Settings / Developer settings / Personal access tokens_.
 Generate a new token with the `repo` scope. Copy this token and be ready to use it during the launch
