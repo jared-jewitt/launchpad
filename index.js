@@ -22,36 +22,27 @@ const { formatSentence } = require("./utils/format");
     );
 
     const { name, description, private } = await inquirer.askMeta();
-    const { client, server, database } = await inquirer.askStack();
+    const { frontend, backend } = await inquirer.askStack();
     const { token, username } = await inquirer.askToken();
 
     const stack = [
-      ...(!client ? [] : [{
+      ...(!frontend ? [] : [{
         template_owner: constants.LAUNCHPAD_OWNER,
-        template_repo: client,
+        template_repo: frontend,
         owner: username,
-        name: `${name}-client`,
+        name: `${name}-frontend`,
         description: "",
         private,
-        folderName: "client",
+        folderName: "frontend",
       }]),
-      ...(!server ? [] : [{
+      ...(!backend ? [] : [{
         template_owner: constants.LAUNCHPAD_OWNER,
-        template_repo: server,
+        template_repo: backend,
         owner: username,
-        name: `${name}-server`,
+        name: `${name}-backend`,
         description: "",
         private,
-        folderName: "server",
-      }]),
-      ...(!database ? [] : [{
-        template_owner: constants.LAUNCHPAD_OWNER,
-        template_repo: database,
-        owner: username,
-        name: `${name}-database`,
-        description: "",
-        private,
-        folderName: "database",
+        folderName: "backend",
       }]),
     ];
 
@@ -73,12 +64,12 @@ const { formatSentence } = require("./utils/format");
       });
     }));
 
-    await git.clone(`https://${username}:${token}@github.com/${username}/${name}`, name);
+    await git.clone(`https://${username}:${token}@github.com/${username}/${name}.git`, name);
     await git.cwd(path.join(process.cwd(), name));
     process.chdir(name);
 
     await Promise.all(stack.map(async ({ owner, name, folderName }) => {
-      return await git.submoduleAdd(`https://github.com/${owner}/${name}`, folderName);
+      return await git.submoduleAdd(`https://${username}:${token}@github.com/${owner}/${name}.git`, folderName);
     }));
 
     const stream = fs.createWriteStream("README.md");

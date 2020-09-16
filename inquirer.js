@@ -50,39 +50,28 @@ module.exports = {
 
   askStack: async () => {
     const repos = await github.getRepos(constants.LAUNCHPAD_OWNER);
-    const clientBoosters = formatRepos("client-booster-", repos);
-    const serverBoosters = formatRepos("server-booster-", repos);
-    const databaseBoosters = formatRepos("database-booster-", repos);
+    const frontendBoosters = formatRepos("frontend-booster-", repos);
+    const backendBoosters = formatRepos("backend-booster-", repos);
 
     const questions = [
       {
-        name: "client",
+        name: "frontend",
         type: "list",
-        message: "Select a client:",
-        choices: clientBoosters.map(b => b.label),
+        message: "Select a frontend:",
+        choices: frontendBoosters.map(b => b.label),
         validate: (value) => {
           if (value.length) return true;
-          return "Please select a client.";
+          return "Please select a frontend.";
         },
       },
       {
-        name: "server",
+        name: "backend",
         type: "list",
-        message: "Select a server:",
-        choices: serverBoosters.map(b => b.label),
+        message: "Select a backend:",
+        choices: backendBoosters.map(b => b.label),
         validate: (value) => {
           if (value.length) return true;
-          return "Please select a server.";
-        },
-      },
-      {
-        name: "database",
-        type: "list",
-        message: "Select a database:",
-        choices: databaseBoosters.map(b => b.label),
-        validate: (value) => {
-          if (value.length) return true;
-          return "Please select a database.";
+          return "Please select a backend.";
         },
       },
       {
@@ -92,20 +81,19 @@ module.exports = {
       },
     ];
 
-    let { client, server, database, confirm } = await inquirer.prompt(questions);
+    let { frontend, backend, confirm } = await inquirer.prompt(questions);
 
     const verifyStack = async (c) => {
       if (!c) {
-        ({ client, server, database, confirm } = await inquirer.prompt(questions));
+        ({ frontend, backend, confirm } = await inquirer.prompt(questions));
         return await verifyStack(confirm);
       }
     };
     await verifyStack(confirm);
 
     return {
-      client: clientBoosters.find(b => b.label === client).value,
-      server: serverBoosters.find(b => b.label === server).value,
-      database: databaseBoosters.find(b => b.label === database).value,
+      frontend: frontendBoosters.find(b => b.label === frontend).value,
+      backend: backendBoosters.find(b => b.label === backend).value,
     };
   },
 
@@ -114,7 +102,7 @@ module.exports = {
       {
         name: "token",
         type: "input",
-        message: "Enter your GitHub personal access token (https://github.com/settings/tokens):",
+        message: "Enter your GitHub personal access token (Obtain here: https://github.com/settings/tokens):",
         validate: (value) => {
           if (value.length) return true;
           return "Please enter your GitHub personal access token.";
