@@ -4,6 +4,14 @@
   "description": "The fastest way to bootstrap an app",
   "license": "MIT",
   "main": "index.js",
+  "keywords": [
+    "boilerplates",
+    "launchpad",
+    "booster",
+    "cli",
+    "wizard",
+    "github"
+  ],
   "repository": {
     "type" : "git",
     "url" : "https://github.com/jared-jewitt/launchpad.git"
