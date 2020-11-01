@@ -34,7 +34,7 @@ and simply run the `launch` command. This will, in order:
 - Ask for a project name
 - Ask for a project description
 - Ask if the project is private
-- Ask which frontend booster you want to use. (React, Vue, Angular, etc)
+- Ask which frontend booster you want to use. (React SPA, NextJS, NuxtJS, etc)
 - Ask which backend booster you want to use. (GraphQL + MongoDB, Flask + PostgreSQL, etc)
 - Ask for a GitHub token (used to create repositorie(s) and configure git)
 - Create a main GitHub repository based on your project name
@@ -50,7 +50,8 @@ Boosters are just individual boilerplates that are _expected_ to contain run and
 boosters, the Launchpad would be useless. Currently, boosters can be found within my
 [GitHub repositories](https://github.com/jared-jewitt?tab=repositories). Boosters must respect the following
 repository naming convention: `[frontend|backend]-booster-[library/framework]`. For example, a booster name may 
-look like `frontend-booster-react-csr`.
+look like `frontend-booster-nextjs`. Booster repositories must also contain a description, which is what the Launchpad
+will use for the selection options.
  
 A full set of Booster guidelines can be found [here](https://github.com/jared-jewitt/booster-guidelines).
 
