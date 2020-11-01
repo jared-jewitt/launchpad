@@ -50,11 +50,11 @@ Boosters are just individual boilerplates that are _expected_ to contain run and
 boosters, the Launchpad would be useless. Currently, boosters can be found within my
 [GitHub repositories](https://github.com/jared-jewitt?tab=repositories). Boosters must respect the following
 repository naming convention: `[frontend|backend]-booster-[library/framework]`. For example, a booster name may 
-look like `frontend-booster-react`.
+look like `frontend-booster-react-csr`.
  
 A full set of Booster guidelines can be found [here](https://github.com/jared-jewitt/booster-guidelines).
 
-## 🚀 Getting Started
+### 🚀 Getting Started
 
 1. On your GitHub account, navigate to _Settings / Developer settings / Personal access tokens_.
 Generate a new token with the `repo` scope. Copy this token and be ready to use it during the launch
@@ -70,6 +70,6 @@ process.
     launch
     ```
 
-## License
+### ⚖️ License
 
 Code released under the [MIT License](LICENSE).

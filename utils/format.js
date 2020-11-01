@@ -10,7 +10,7 @@ module.exports.formatSentence = (v) => capitalize(v.trim().replace(/-/g, " "));
 module.exports.formatRepos = (filter, repos) => repos.data
   .filter(r => r.url.includes(filter))
   .map(r => ({
-    label: capitalize(r.name.split("-")[2].replace(/-/g, " ")),
+    label: r.description,
     value: r.name,
   }))
   .concat({
