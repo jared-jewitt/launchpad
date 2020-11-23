@@ -1,7 +1,6 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
 const chalk = require("chalk");
-
 const github = require("./github");
 const constants = require("./constants");
 const { config } =  require("./utils/config");
