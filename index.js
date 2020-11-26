@@ -85,7 +85,7 @@ const { formatSentence } = require("./utils/format");
 
     await git.add(".");
     await git.commit("Blast off 🚀");
-    await git.push("origin", "master");
+    await git.push("origin", "main");
 
     console.log(
       chalk.cyan(
