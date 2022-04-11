@@ -1,3 +1,10 @@
+ <a href="https://www.npmjs.com/package/the-launch-pad" target="_blank">
+   <img alt="Version" src="https://img.shields.io/npm/v/the-launch-pad?color=%23706BF5&style=for-the-badge" />
+ </a>
+ <a href="https://github.com/jared-jewitt/frontend-booster-react/blob/master/LICENSE" target="_blank">
+   <img alt="License" src="https://img.shields.io/npm/l/the-launch-pad?color=%23706BF5&style=for-the-badge" />
+ </a>
+
 ## How to Install
 
 ```shell script
